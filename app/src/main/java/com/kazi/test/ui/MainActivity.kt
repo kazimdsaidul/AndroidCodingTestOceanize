@@ -3,10 +3,9 @@ package com.kazi.test.ui
 import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,21 +13,22 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kazi.test.R
+import com.kazi.test.base.BaseActivity
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
 
+
+    private var navView: BottomNavigationView? = null
     private lateinit var searchView: SearchView
     private var isShowSearchView = false;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        navView = findViewById(R.id.nav_view)
 
-        val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+        val navController = findNavController(com.kazi.test.R.id.nav_host_fragment)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_employee_list,
@@ -37,38 +37,50 @@ class MainActivity : AppCompatActivity() {
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-
-        navView.setOnNavigationItemSelectedListener { item ->
-
-            invalidateOptionsMenu();
-
-            when (item.itemId) {
-                R.id.navigation_employee_list -> {
-                    isShowSearchView = false
-                }
-
-                R.id.navigation_search -> {
-                    Log.e("", "")
-                    isShowSearchView = true
-                }
-
-                R.id.navigation_create -> {
-                    isShowSearchView = false
-                }
-            }
-            return@setOnNavigationItemSelectedListener true
-        }
+        navView?.setupWithNavController(navController)
+        navView?.setOnNavigationItemSelectedListener(this)
 
 
     }
 
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+
+
+        when (item.itemId) {
+            R.id.navigation_employee_list -> {
+                isShowSearchView = false
+
+//                val view = navView!!.findViewById(R.id.navigation_employee_list) as View
+//                view.performClick()
+
+            }
+            R.id.navigation_search -> {
+                isShowSearchView = true
+
+//                val view = navView!!.findViewById(R.id.navigation_search) as View
+//                view.performClick()
+
+            }
+            R.id.navigation_create -> {
+                isShowSearchView = false
+
+//                val view = navView!!.findViewById(R.id.navigation_create) as View
+//                view.performClick()
+
+            }
+        }
+        invalidateOptionsMenu()
+
+        return true
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
+        menuInflater.inflate(com.kazi.test.R.menu.menu_main, menu)
 
         // Associate searchable configuration with the SearchView
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        searchView = menu.findItem(R.id.action_search)
+        searchView = menu.findItem(com.kazi.test.R.id.action_search)
             .getActionView() as SearchView
         searchView.setSearchableInfo(
             searchManager
@@ -98,7 +110,7 @@ class MainActivity : AppCompatActivity() {
             return true
         } else {
             searchView.visibility = View.GONE
-
+            hideUserKeyboard()
             return false
         }
 
