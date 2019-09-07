@@ -1,5 +1,6 @@
 package com.kazi.test.ui.employeesList
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,11 +13,14 @@ import com.cloudwell.paywell.consumer.utils.viewUtil.hide
 import com.cloudwell.paywell.consumer.utils.viewUtil.show
 import com.kazi.test.R
 import com.kazi.test.data.db.entities.Employee
+import com.kazi.test.ui.details.DetailsActivity
 import com.kazi.test.ui.employeesList.adapter.EmployeeItem
 import com.kazi.test.ui.employeesList.employeesViewModelFactory.EmployeesViewModelFactory
 import com.kazi.test.ui.employeesList.view.IVIewEmployerList
 import com.kazi.test.utils.Coroutines
 import com.xwray.groupie.GroupAdapter
+import com.xwray.groupie.Item
+import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.fragment_employees_list.*
 import org.kodein.di.KodeinAware
@@ -25,6 +29,13 @@ import org.kodein.di.generic.instance
 
 
 class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
+    override fun openEmpDetailsActivity(employee: Employee) {
+        val intent = Intent(activity?.applicationContext, DetailsActivity::class.java)
+        intent.putExtra("data", employee);
+
+        activity?.startActivity(intent)
+    }
+
 
     override val kodein by kodein()
 
@@ -47,6 +58,7 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel.view = this
         viewModel.getEmployeesList()
         bindUI()
     }
@@ -71,6 +83,16 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
             setHasFixedSize(true)
             adapter = mAdapter
         }
+
+
+
+        mAdapter.setOnItemClickListener(object : OnItemClickListener {
+            override fun onItemClick(item: Item<*>, view: View) {
+                val employeeemployee = viewModel.listOfEmployees.value?.get(item.getPosition(item))
+                employeeemployee?.let { viewModel.onItemClick(it) }
+
+            }
+        })
     }
 
 

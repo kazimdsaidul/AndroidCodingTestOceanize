@@ -15,11 +15,14 @@ class UserRepository(
 
 ) : SafeApiRequest() {
 
-    suspend fun getEmployees(): List<Employee> {
+    suspend fun getEmployeesAPI(): List<Employee> {
         return apiRequest { apiService.getEmployees() }
     }
 
-    suspend fun saveUser(user: List<Employee>) = db.getUserDao().insert(user)
+    suspend fun saveAllEmployee(user: List<Employee>) = db.getUserDao().insert(user)
 
 
+    suspend fun getEmployeesLocal(): List<Employee> {
+        return db.getUserDao().getAllEmployee()
+    }
 }

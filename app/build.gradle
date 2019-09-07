@@ -36,7 +36,7 @@ android {
         jvmTarget = "1.8"
     }
 
-    dataBinding{
+    dataBinding {
         enabled = true
     }
 
@@ -60,7 +60,6 @@ ext {
     kodein = '6.2.1'
 
     security_version = "1.0.0-alpha02"
-
 
 
 }
@@ -97,7 +96,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.5'
 
-     //Android Room
+    //Android Room
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"

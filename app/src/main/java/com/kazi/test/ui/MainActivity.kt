@@ -1,4 +1,4 @@
-package com.kazi.test
+package com.kazi.test.ui
 
 import android.app.SearchManager
 import android.content.Context
@@ -13,6 +13,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.kazi.test.R
 
 
 class MainActivity : AppCompatActivity() {
@@ -30,15 +31,13 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_employee_list, R.id.navigation_search, R.id.navigation_create
+                R.id.navigation_employee_list,
+                R.id.navigation_search,
+                R.id.navigation_create
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-
-
-
 
         navView.setOnNavigationItemSelectedListener { item ->
 

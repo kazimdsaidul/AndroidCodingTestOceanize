@@ -1,6 +1,5 @@
 package com.kazi.test.ui.employeesList
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,29 +14,48 @@ class EmployeesListViewModel(val repository: UserRepository) : ViewModel() {
 
 
     var listOfEmployees: MutableLiveData<List<Employee>> = MutableLiveData()
+    var mEmployee: MutableLiveData<Employee> = MutableLiveData()
+
     private val _text = MutableLiveData<String>().apply {
         value = "This is dashboard Fragment"
     }
     val text: LiveData<String> = _text
 
-    var iAuthListener: IVIewEmployerList? = null
+    var view: IVIewEmployerList? = null
+
 
 
     fun getEmployeesList() {
-        iAuthListener?.showProgress()
+        view?.showProgress()
         Coroutines.main {
             try {
-                val employees = repository.getEmployees()
-                listOfEmployees.value = employees
-                Log.e("", "")
+
+                val employeesLocal = repository.getEmployeesLocal()
+                if (employeesLocal.size != 0) {
+                    listOfEmployees.value = employeesLocal
+                } else {
+                    val employees = repository.getEmployeesAPI()
+                    repository.saveAllEmployee(employees)
+                    listOfEmployees.value = employees
+                }
 
             } catch (e: ApiException) {
-                iAuthListener?.onFailure(e.message)
+                view?.onFailure(e.message)
             } catch (e: NoInternetException) {
-                iAuthListener?.noInternetConnectionFound()
+                view?.noInternetConnectionFound()
             }
 
         }
+
+
+    }
+
+    fun onItemClick(employee: Employee) {
+
+        view?.openEmpDetailsActivity(employee)
+
+
+
 
 
     }

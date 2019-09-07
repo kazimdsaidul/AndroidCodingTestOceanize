@@ -10,4 +10,6 @@
     <string name="salary">Salary: %s</string>
     <string name="age">Age: %s</string>
     <string name="emp_id">Employee ID: %s</string>
+    <string name="title_activity_details">DetailsActivity</string>
+    <string name="employee_details">Employee Details</string>
 </resources>
