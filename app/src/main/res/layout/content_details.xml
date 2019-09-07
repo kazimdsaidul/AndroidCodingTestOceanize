@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewmodel"
+            type="com.kazi.test.ui.employeesList.EmployeesListViewModel" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp">
+
+            <ImageView
+                android:id="@+id/ivEmpImage"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars[4]" />
+
+            <TextView
+                android:id="@+id/tvEmpName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:text="@{viewmodel.mEmployee.employeeName"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivEmpImage"
+                app:layout_constraintTop_toTopOf="@+id/ivEmpImage"
+                tools:text="KAZI MD. SAIDUL" />
+
+            <TextView
+                android:id="@+id/tvEmpSalary"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{@string/salary(viewmodel.mEmployee.employeeSalary)}"
+                app:layout_constraintEnd_toEndOf="@+id/tvEmpID"
+                app:layout_constraintHorizontal_bias="0.3"
+                app:layout_constraintStart_toStartOf="@+id/tvEmpID"
+                app:layout_constraintTop_toBottomOf="@+id/tvEmpID"
+                tools:text="Salary: 1000" />
+
+            <TextView
+                android:id="@+id/tvEmpAge"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{@string/age(viewmodel.mEmployee.employeeAge)}"
+                app:layout_constraintEnd_toEndOf="@+id/tvEmpSalary"
+                app:layout_constraintStart_toStartOf="@+id/tvEmpSalary"
+                app:layout_constraintTop_toBottomOf="@+id/tvEmpSalary"
+                tools:text="Age: 245" />
+
+            <TextView
+                android:id="@+id/tvEmpID"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{@string/emp_id(viewmodel.mEmployee.id)}"
+                app:layout_constraintEnd_toEndOf="@+id/tvEmpName"
+                app:layout_constraintStart_toStartOf="@+id/tvEmpName"
+                app:layout_constraintTop_toBottomOf="@+id/tvEmpName"
+                tools:text="Employee ID: 148518" />
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:max="5"
+                android:min="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivEmpImage" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>
