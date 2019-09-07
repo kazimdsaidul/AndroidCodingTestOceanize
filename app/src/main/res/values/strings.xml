@@ -7,4 +7,7 @@
     <string name="employee_list">Employee List</string>
     <string name="create">Create</string>
     <string name="search">Search</string>
+    <string name="salary">Salary: %s</string>
+    <string name="age">Age: %s</string>
+    <string name="emp_id">Employee ID: %s</string>
 </resources>
