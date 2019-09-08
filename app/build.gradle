@@ -118,4 +118,7 @@ dependencies {
 
     implementation 'com.github.lndmflngs:memorizing-pager:2.0.1'
 
+    implementation 'org.apache.commons:commons-lang3:3.8.1'
+
+
 }

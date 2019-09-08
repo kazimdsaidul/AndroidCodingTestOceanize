@@ -20,9 +20,6 @@ import org.kodein.di.generic.provider
 import org.kodein.di.generic.singleton
 
 
-
-
-
 /**
  * Created by Android on 12/1/2015.
  */

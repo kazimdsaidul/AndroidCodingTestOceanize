@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
  */
 open class BaseActivity : AppCompatActivity() {
 
-
     fun setToolbar(title: String, color: Int) {
         assert(supportActionBar != null)
         if (supportActionBar != null) {

@@ -15,7 +15,6 @@ data class Employee(
 
     @SerializedName("id")
     var id: String = "",
-
     @SerializedName("employee_name")
     var employeeName: String = "",
     @SerializedName("employee_salary")
