@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:text="@{viewmodel.mEmployee.employeeName"
+                android:text="@{viewmodel.mEmployee.employeeName}"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivEmpImage"
@@ -80,6 +80,7 @@
                 tools:text="Employee ID: 148518" />
 
             <RatingBar
+                android:stepSize="1"
                 android:id="@+id/ratingBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

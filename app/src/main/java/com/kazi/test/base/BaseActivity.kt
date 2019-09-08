@@ -39,6 +39,13 @@ open class BaseActivity : AppCompatActivity() {
         }
     }
 
+    fun setToolbarWithOutBack(title: String) {
+        assert(supportActionBar != null)
+        if (supportActionBar != null) {
+            supportActionBar!!.title = title
+        }
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == android.R.id.home) {
             this.onBackPressed()

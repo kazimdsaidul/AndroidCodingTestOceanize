@@ -24,6 +24,7 @@ import org.kodein.di.generic.instance
 class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
 
 
+
     override fun openEmpDetailsActivity(employee: Employee) {
 
     }
@@ -48,19 +49,20 @@ class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
         viewModel.mEmployee.value = employee
 
         setEmpImageFormServer(employee)
+        setToolbar(getString(R.string.employee_details))
 
 
-        setToolbar(getString(com.kazi.test.R.string.employee_details))
-
-
+        ratingBar.rating = employee.rating.toFloat()
         ratingBar.onRatingBarChangeListener =
             RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
-                Toast.makeText(this@DetailsActivity, "Rating :-  $rating", Toast.LENGTH_SHORT)
-                    .show()
-                if (rating < 1.0f)
+                Toast.makeText(this@DetailsActivity, "Rating :-  $rating", Toast.LENGTH_SHORT).show()
+                viewModel.updateRating(rating.toInt())
+                if (rating < 1.0f){
                     ratingBar.rating = 1.0f
-            }
 
+                }
+
+            }
 
     }
 
@@ -80,6 +82,7 @@ class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
     }
 
 
+
     override fun noInternetConnectionFound() {
 
     }
@@ -95,6 +98,7 @@ class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
     override fun onFailure(message: String?) {
 
     }
+
 
 
 }
