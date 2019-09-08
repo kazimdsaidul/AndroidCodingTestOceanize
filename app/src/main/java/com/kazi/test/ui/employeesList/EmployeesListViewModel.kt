@@ -1,5 +1,6 @@
 package com.kazi.test.ui.employeesList
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -51,12 +52,26 @@ class EmployeesListViewModel(val repository: UserRepository) : ViewModel() {
     }
 
     fun onItemClick(employee: Employee) {
-
         view?.openEmpDetailsActivity(employee)
+    }
+
+    fun updateRating(rating: Int) {
+        Coroutines.main {
+            try {
+
+                val value = mEmployee.value as Employee
+                value.rating = rating
+                val update = repository.update(value)
+                Log.e("", "");
 
 
+            } catch (e: ApiException) {
+                view?.onFailure(e.message)
+            } catch (e: NoInternetException) {
+                view?.noInternetConnectionFound()
+            }
 
-
+        }
 
     }
 }

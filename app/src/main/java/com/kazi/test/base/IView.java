@@ -6,9 +6,7 @@ package com.kazi.test.base;
  */
 public interface IView {
     void noInternetConnectionFound();
-
     void showProgress();
-
     void hiddenProgress();
 
     void onFailure(String message);

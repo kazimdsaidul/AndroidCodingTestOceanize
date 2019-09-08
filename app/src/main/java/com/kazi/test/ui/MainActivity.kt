@@ -80,7 +80,7 @@ class MainActivity : BaseActivity(){
 
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(com.kazi.test.R.menu.menu_main, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
 
         // Associate searchable configuration with the SearchView
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager

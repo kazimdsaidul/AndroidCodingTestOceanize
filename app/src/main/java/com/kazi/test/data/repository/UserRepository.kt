@@ -25,4 +25,8 @@ class UserRepository(
     suspend fun getEmployeesLocal(): List<Employee> {
         return db.getUserDao().getAllEmployee()
     }
+
+    suspend fun update(employee : Employee) : Int{
+        return db.getUserDao().update(employee)
+    }
 }

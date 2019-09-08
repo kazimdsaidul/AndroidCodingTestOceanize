@@ -58,6 +58,11 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+    }
+
+    override fun onResume() {
+        super.onResume()
         viewModel.view = this
         viewModel.getEmployeesList()
         bindUI()
@@ -88,8 +93,8 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
 
         mAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(item: Item<*>, view: View) {
-                val employeeemployee = viewModel.listOfEmployees.value?.get(item.getPosition(item))
-                employeeemployee?.let { viewModel.onItemClick(it) }
+                val employeeItem = item as EmployeeItem
+                 viewModel.onItemClick(employeeItem.employee)
 
             }
         })

@@ -10,7 +10,7 @@ import com.xwray.groupie.databinding.BindableItem
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-09-07.
  */
-class EmployeeItem(private val employee: Employee) : BindableItem<ItemEmployeeBinding>() {
+class EmployeeItem( val employee: Employee) : BindableItem<ItemEmployeeBinding>() {
 
     override fun getLayout() = R.layout.item_employee
 
