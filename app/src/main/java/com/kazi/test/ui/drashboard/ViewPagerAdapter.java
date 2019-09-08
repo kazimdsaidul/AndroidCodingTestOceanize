@@ -1,4 +1,4 @@
-package com.kazi.test.ui;
+package com.kazi.test.ui.drashboard;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

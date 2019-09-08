@@ -13,6 +13,5 @@
     <string name="title_activity_details">DetailsActivity</string>
     <string name="employee_details">Employee Details</string>
     <string name="employees_list">Employees List</string>
-    <string name="search">Search</string>
     <string name="create_employees">Create Employees</string>
 </resources>

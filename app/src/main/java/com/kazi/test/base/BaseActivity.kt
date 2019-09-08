@@ -35,7 +35,6 @@ open class BaseActivity : AppCompatActivity() {
         if (supportActionBar != null) {
             supportActionBar!!.title = title
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-
         }
     }
 
