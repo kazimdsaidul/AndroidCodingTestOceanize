@@ -32,7 +32,6 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
     override fun openEmpDetailsActivity(employee: Employee) {
         val intent = Intent(activity?.applicationContext, DetailsActivity::class.java)
         intent.putExtra("data", employee);
-
         activity?.startActivity(intent)
     }
 
@@ -119,4 +118,6 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
 
     override fun onFailure(message: String?) {
     }
+
+
 }
