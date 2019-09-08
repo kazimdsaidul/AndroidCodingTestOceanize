@@ -4,19 +4,18 @@ import android.app.SearchManager
 import android.content.Context
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kazi.test.R
 import com.kazi.test.base.BaseActivity
+import com.kazi.test.ui.employeesList.EmployeesListFragment
+import com.kazi.test.ui.home.HomeFragment
+import com.kazi.test.ui.notifications.EmployeeCreateFragment
 
 
-class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity(){
 
 
     private var navView: BottomNavigationView? = null
@@ -28,52 +27,57 @@ class MainActivity : BaseActivity(), BottomNavigationView.OnNavigationItemSelect
         setContentView(R.layout.activity_main)
         navView = findViewById(R.id.nav_view)
 
-        val navController = findNavController(com.kazi.test.R.id.nav_host_fragment)
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.navigation_employee_list,
-                R.id.navigation_search,
-                R.id.navigation_create
-            )
-        )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView?.setupWithNavController(navController)
-        navView?.setOnNavigationItemSelectedListener(this)
+        navView?.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        setToolbarWithOutBack("Employees List")
+
+        loadFragment(EmployeesListFragment())
 
 
     }
 
+    private val mOnNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
+            val fragment: Fragment
+            when (item.itemId) {
+                R.id.navigation_employee_list -> {
+                    isShowSearchView = false
+                    setToolbarWithOutBack("Employees List")
+                    fragment = EmployeesListFragment()
+                    loadFragment(fragment)
+                    invalidateOptionsMenu()
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_search -> {
+                    isShowSearchView = true
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-
-
-        when (item.itemId) {
-            R.id.navigation_employee_list -> {
-                isShowSearchView = false
-
-//                val view = navView!!.findViewById(R.id.navigation_employee_list) as View
-//                view.performClick()
+                    fragment = HomeFragment()
+                    loadFragment(fragment)
+                    invalidateOptionsMenu()
+                    return@OnNavigationItemSelectedListener true
+                }
+                R.id.navigation_create -> {
+                    isShowSearchView = false
+                    setToolbarWithOutBack("Create Employees")
+                    fragment = EmployeeCreateFragment()
+                    loadFragment(fragment)
+                    invalidateOptionsMenu()
+                    return@OnNavigationItemSelectedListener true
+                }
 
             }
-            R.id.navigation_search -> {
-                isShowSearchView = true
 
-//                val view = navView!!.findViewById(R.id.navigation_search) as View
-//                view.performClick()
 
-            }
-            R.id.navigation_create -> {
-                isShowSearchView = false
 
-//                val view = navView!!.findViewById(R.id.navigation_create) as View
-//                view.performClick()
-
-            }
+            false
         }
-        invalidateOptionsMenu()
 
-        return true
+    private fun loadFragment(fragment: Fragment) {
+        // load fragment
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.nav_host_fragment, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(com.kazi.test.R.menu.menu_main, menu)

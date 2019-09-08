@@ -48,9 +48,7 @@ class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
         viewModel.mEmployee.value = employee
 
         setEmpImageFormServer(employee)
-
-
-        setToolbar(getString(com.kazi.test.R.string.employee_details))
+        setToolbar(getString(R.string.employee_details))
 
 
         ratingBar.onRatingBarChangeListener =
@@ -59,6 +57,7 @@ class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
                     .show()
                 if (rating < 1.0f)
                     ratingBar.rating = 1.0f
+
             }
 
 
