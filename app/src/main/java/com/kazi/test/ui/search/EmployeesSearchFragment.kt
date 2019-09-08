@@ -1,19 +1,19 @@
-package com.kazi.test.ui.employeesList
+package com.kazi.test.ui.search
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuItemCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudwell.paywell.consumer.utils.viewUtil.hide
 import com.cloudwell.paywell.consumer.utils.viewUtil.show
-import com.kazi.test.R
 import com.kazi.test.data.db.entities.Employee
 import com.kazi.test.ui.details.DetailsActivity
+import com.kazi.test.ui.employeesList.EmployeesListViewModel
 import com.kazi.test.ui.employeesList.adapter.EmployeeItem
 import com.kazi.test.ui.employeesList.employeesViewModelFactory.EmployeesViewModelFactory
 import com.kazi.test.ui.employeesList.view.IVIewEmployerList
@@ -28,7 +28,7 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
-class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
+class EmployeesSearchFragment : Fragment(), IVIewEmployerList, KodeinAware {
     override fun openEmpDetailsActivity(employee: Employee) {
         val intent = Intent(activity?.applicationContext, DetailsActivity::class.java)
         intent.putExtra("data", employee);
@@ -36,6 +36,8 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
     }
 
 
+    private lateinit var mAdapter: GroupAdapter<ViewHolder>
+    private lateinit var searchView: SearchView
     override val kodein by kodein()
 
     private val factory: EmployeesViewModelFactory  by instance()
@@ -49,9 +51,10 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
     ): View? {
 
         viewModel = ViewModelProviders.of(this, factory).get(EmployeesListViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_employees_list, container, false)
 
+        setHasOptionsMenu(true)
 
+        val root = inflater.inflate(com.kazi.test.R.layout.fragment_employees_list, container, false)
         return root
     }
 
@@ -78,7 +81,7 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
 
     private fun initRecyclerView(quoteItem: List<EmployeeItem>) {
 
-        val mAdapter = GroupAdapter<ViewHolder>().apply {
+        mAdapter = GroupAdapter<ViewHolder>().apply {
             addAll(quoteItem)
         }
 
@@ -88,13 +91,10 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
             adapter = mAdapter
         }
 
-
-
         mAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(item: Item<*>, view: View) {
                 val employeeItem = item as EmployeeItem
                  viewModel.onItemClick(employeeItem.employee)
-
             }
         })
     }
@@ -104,6 +104,40 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
         return this.map {
             EmployeeItem(it)
         }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(com.kazi.test.R.menu.menu_main, menu)
+        val item = menu.findItem(com.kazi.test.R.id.action_search)
+        searchView = MenuItemCompat.getActionView(item) as SearchView
+
+        MenuItemCompat.setShowAsAction(
+            item,
+            MenuItemCompat.SHOW_AS_ACTION_COLLAPSE_ACTION_VIEW or MenuItemCompat.SHOW_AS_ACTION_IF_ROOM
+        )
+        MenuItemCompat.setActionView(item, searchView)
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                //Do search code here
+                val filter = viewModel.listOfEmployees.value?.filter {
+                    it.employeeName.contains(newText)
+                }
+
+
+                filter?.toQuoteItem()?.let { initRecyclerView(it) }
+
+                return true
+            }
+        })
+
+        MenuItemCompat.expandActionView(item)
+
     }
 
 

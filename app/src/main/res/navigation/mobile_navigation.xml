@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/navigation_create"
-        android:name="com.kazi.test.ui.notifications.NotificationsFragment"
+        android:name="com.kazi.test.ui.addEmloyee.EmployeeCreateFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_emplyee_create" />
 </navigation>

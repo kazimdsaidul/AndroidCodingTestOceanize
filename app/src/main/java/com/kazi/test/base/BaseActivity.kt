@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity
  */
 open class BaseActivity : AppCompatActivity() {
 
-
     fun setToolbar(title: String, color: Int) {
         assert(supportActionBar != null)
         if (supportActionBar != null) {
@@ -35,7 +34,13 @@ open class BaseActivity : AppCompatActivity() {
         if (supportActionBar != null) {
             supportActionBar!!.title = title
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        }
+    }
 
+    fun setToolbarWithOutBack(title: String) {
+        assert(supportActionBar != null)
+        if (supportActionBar != null) {
+            supportActionBar!!.title = title
         }
     }
 

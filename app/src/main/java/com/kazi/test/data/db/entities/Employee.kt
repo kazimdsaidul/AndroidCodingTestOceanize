@@ -10,9 +10,11 @@ import com.google.gson.annotations.SerializedName
 @Entity
 data class Employee(
 
+    @PrimaryKey(autoGenerate = true)
+    val uid: Long,
+
     @SerializedName("id")
     var id: String = "",
-
     @SerializedName("employee_name")
     var employeeName: String = "",
     @SerializedName("employee_salary")
@@ -20,34 +22,44 @@ data class Employee(
     @SerializedName("employee_age")
     var employeeAge: String = "",
     @SerializedName("profile_image")
-    var profileImage: String = ""
+    var profileImage: String = "",
+
+    var rating: Int = 0
+
 ) : Parcelable {
-    @PrimaryKey(autoGenerate = true)
-    var uid: Int = 0
-
-    constructor(source: Parcel) : this(
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString(),
-        source.readString()
-    )
-
-    override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel, flags: Int) = with(dest) {
-        writeString(id)
-        writeString(employeeName)
-        writeString(employeeSalary)
-        writeString(employeeAge)
-        writeString(profileImage)
+    constructor(parcel: Parcel) : this(
+        parcel.readLong(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readString(),
+        parcel.readInt()
+    ) {
     }
 
-    companion object {
-        @JvmField
-        val CREATOR: Parcelable.Creator<Employee> = object : Parcelable.Creator<Employee> {
-            override fun createFromParcel(source: Parcel): Employee = Employee(source)
-            override fun newArray(size: Int): Array<Employee?> = arrayOfNulls(size)
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeLong(uid)
+        parcel.writeString(id)
+        parcel.writeString(employeeName)
+        parcel.writeString(employeeSalary)
+        parcel.writeString(employeeAge)
+        parcel.writeString(profileImage)
+        parcel.writeInt(rating)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<Employee> {
+        override fun createFromParcel(parcel: Parcel): Employee {
+            return Employee(parcel)
+        }
+
+        override fun newArray(size: Int): Array<Employee?> {
+            return arrayOfNulls(size)
         }
     }
 }
+

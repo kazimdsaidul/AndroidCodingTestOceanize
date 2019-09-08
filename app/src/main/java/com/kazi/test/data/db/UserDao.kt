@@ -1,9 +1,6 @@
 package  com.kazi.test.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 import com.kazi.test.data.db.entities.Employee
 
 /**
@@ -17,6 +14,9 @@ interface UserDao {
 
     @Query("SELECT * from Employee")
     suspend fun getAllEmployee(): List<Employee>
+
+    @Update
+    suspend fun update(employee: Employee) : Int
 
 
 }
