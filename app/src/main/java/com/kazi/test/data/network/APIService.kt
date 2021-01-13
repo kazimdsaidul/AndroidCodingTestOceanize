@@ -1,8 +1,9 @@
 package com.kazi.test.data.network
 
+import androidx.databinding.library.BuildConfig
 import com.itkacher.okhttpprofiler.OkHttpProfilerInterceptor
-import com.kazi.test.BuildConfig
 import com.kazi.test.data.db.entities.Employee
+import com.kazi.test.data.db.entities.PopularMovieListResponse
 import com.kazi.test.data.network.interceptor.NetworkConnectionInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -10,6 +11,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 
 /**
@@ -17,7 +19,12 @@ import retrofit2.http.GET
  */
 public interface APIService {
 
+
+
+
     companion object {
+        val API_KEY:String = "b5551849719b4d25eefef7ea2e1564a8"
+
         operator fun invoke(
             networkConnectionInterceptor: NetworkConnectionInterceptor
         ): APIService {
@@ -35,7 +42,7 @@ public interface APIService {
 
             return Retrofit.Builder()
                 .client(okkHttpclient.build())
-                .baseUrl("http://dummy.restapiexample.com/")
+                .baseUrl("https://api.themoviedb.org/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(APIService::class.java)
@@ -43,9 +50,8 @@ public interface APIService {
     }
 
 
-    @GET("api/v1/employees")
-    suspend fun getEmployees(
-    ): Response<List<Employee>>
+    @GET("3/movie/popular")
+    suspend fun getEmployees(@Query("api_key") apiKey :String): Response<PopularMovieListResponse>
 
 
 }

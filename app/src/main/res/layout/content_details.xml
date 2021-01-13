@@ -7,7 +7,7 @@
 
         <variable
             name="viewmodel"
-            type="com.kazi.test.ui.employeesList.EmployeesListViewModel" />
+            type="com.kazi.test.ui.popularMovieList.MovieListViewModel" />
     </data>
 
     <com.google.android.material.card.MaterialCardView
@@ -38,7 +38,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:text="@{viewmodel.mEmployee.employeeName}"
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivEmpImage"
@@ -50,7 +49,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{@string/salary(viewmodel.mEmployee.employeeSalary)}"
                 app:layout_constraintEnd_toEndOf="@+id/tvEmpID"
                 app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintStart_toStartOf="@+id/tvEmpID"
@@ -62,7 +60,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{@string/age(viewmodel.mEmployee.employeeAge)}"
                 app:layout_constraintEnd_toEndOf="@+id/tvEmpSalary"
                 app:layout_constraintStart_toStartOf="@+id/tvEmpSalary"
                 app:layout_constraintTop_toBottomOf="@+id/tvEmpSalary"
@@ -73,7 +70,6 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="@{@string/emp_id(viewmodel.mEmployee.id)}"
                 app:layout_constraintEnd_toEndOf="@+id/tvEmpName"
                 app:layout_constraintStart_toStartOf="@+id/tvEmpName"
                 app:layout_constraintTop_toBottomOf="@+id/tvEmpName"

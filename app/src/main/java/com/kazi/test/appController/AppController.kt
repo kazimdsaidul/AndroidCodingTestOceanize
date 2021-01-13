@@ -9,7 +9,7 @@ import com.kazi.test.data.network.APIService
 import com.kazi.test.data.network.interceptor.HeaderTokenInterceptor
 import com.kazi.test.data.network.interceptor.NetworkConnectionInterceptor
 import com.kazi.test.data.repository.UserRepository
-import com.kazi.test.ui.employeesList.employeesViewModelFactory.EmployeesViewModelFactory
+import com.kazi.test.ui.popularMovieList.MovieViewModelFactory.EmployeesViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.BuildConfig
@@ -55,6 +55,9 @@ public open class AppController : Application(), KodeinAware {
 
         }
     }
+
+
+
 
 
 }

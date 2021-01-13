@@ -1,7 +1,7 @@
 package  com.kazi.test.data.db
 
 import androidx.room.*
-import com.kazi.test.data.db.entities.Employee
+import com.kazi.test.data.db.entities.MovieResultsItem
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-09-03.
@@ -10,13 +10,13 @@ import com.kazi.test.data.db.entities.Employee
 interface UserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(user: List<Employee>): List<Long>
+    suspend fun insert(user:List<MovieResultsItem>): List<Long>
 
-    @Query("SELECT * from Employee")
-    suspend fun getAllEmployee(): List<Employee>
+    @Query("SELECT * from MovieResultsItem")
+    suspend fun getAllEmployee(): List<MovieResultsItem>
 
     @Update
-    suspend fun update(employee: Employee) : Int
+    suspend fun update(employee: MovieResultsItem) : Int
 
 
 }

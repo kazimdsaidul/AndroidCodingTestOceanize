@@ -8,18 +8,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.kazi.test.R
-import com.kazi.test.data.db.entities.Employee
+import com.kazi.test.data.db.entities.MovieResultsItem
 import com.kazi.test.ui.details.DetailsActivity
-import com.kazi.test.ui.employeesList.EmployeesListViewModel
-import com.kazi.test.ui.employeesList.employeesViewModelFactory.EmployeesViewModelFactory
-import com.kazi.test.ui.employeesList.view.IVIewEmployerList
+import com.kazi.test.ui.popularMovieList.MovieListViewModel
+import com.kazi.test.ui.popularMovieList.MovieViewModelFactory.EmployeesViewModelFactory
+import com.kazi.test.ui.popularMovieList.view.IVIewEmployerList
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
 class AddEmployeeFragment : Fragment(), IVIewEmployerList, KodeinAware {
-    override fun openEmpDetailsActivity(employee: Employee) {
+    override fun openEmpDetailsActivity(employee: MovieResultsItem) {
         val intent = Intent(activity?.applicationContext, DetailsActivity::class.java)
         intent.putExtra("data", employee);
         activity?.startActivity(intent)
@@ -29,7 +29,7 @@ class AddEmployeeFragment : Fragment(), IVIewEmployerList, KodeinAware {
     override val kodein by kodein()
 
     private val factory: EmployeesViewModelFactory  by instance()
-    private lateinit var viewModel: EmployeesListViewModel
+    private lateinit var viewModel: MovieListViewModel
 
 
     override fun onCreateView(
@@ -38,7 +38,7 @@ class AddEmployeeFragment : Fragment(), IVIewEmployerList, KodeinAware {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProviders.of(this, factory).get(EmployeesListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory).get(MovieListViewModel::class.java)
         viewModel.view = this
         viewModel.getEmployeesList()
         val root = inflater.inflate(R.layout.fragment_employees_add, container, false)

@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="com.kazi.test.ui.employeesList.EmployeesListViewModel" />
+            type="com.kazi.test.ui.popularMovieList.MovieListViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

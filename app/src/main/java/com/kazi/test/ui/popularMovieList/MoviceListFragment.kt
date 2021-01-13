@@ -1,4 +1,4 @@
-package com.kazi.test.ui.employeesList
+package com.kazi.test.ui.popularMovieList
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.cloudwell.paywell.consumer.utils.viewUtil.hide
 import com.cloudwell.paywell.consumer.utils.viewUtil.show
 import com.kazi.test.R
-import com.kazi.test.data.db.entities.Employee
+import com.kazi.test.data.db.entities.MovieResultsItem
 import com.kazi.test.ui.details.DetailsActivity
-import com.kazi.test.ui.employeesList.adapter.EmployeeItem
-import com.kazi.test.ui.employeesList.employeesViewModelFactory.EmployeesViewModelFactory
-import com.kazi.test.ui.employeesList.view.IVIewEmployerList
+import com.kazi.test.ui.popularMovieList.adapter.MoviceItem
+import com.kazi.test.ui.popularMovieList.MovieViewModelFactory.EmployeesViewModelFactory
+import com.kazi.test.ui.popularMovieList.view.IVIewEmployerList
 import com.kazi.test.utils.Coroutines
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
@@ -28,8 +28,9 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
-class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
-    override fun openEmpDetailsActivity(employee: Employee) {
+class MoviceListFragment : Fragment(), IVIewEmployerList, KodeinAware {
+
+    override fun openEmpDetailsActivity(employee: MovieResultsItem) {
         val intent = Intent(activity?.applicationContext, DetailsActivity::class.java)
         intent.putExtra("data", employee);
         activity?.startActivity(intent)
@@ -39,7 +40,7 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
     override val kodein by kodein()
 
     private val factory: EmployeesViewModelFactory  by instance()
-    private lateinit var viewModel: EmployeesListViewModel
+    private lateinit var viewModel: MovieListViewModel
 
 
     override fun onCreateView(
@@ -48,7 +49,7 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
         savedInstanceState: Bundle?
     ): View? {
 
-        viewModel = ViewModelProviders.of(this, factory).get(EmployeesListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory).get(MovieListViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_employees_list, container, false)
 
 
@@ -76,7 +77,7 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
         })
     }
 
-    private fun initRecyclerView(quoteItem: List<EmployeeItem>) {
+    private fun initRecyclerView(quoteItem: List<MoviceItem>) {
 
         val mAdapter = GroupAdapter<ViewHolder>().apply {
             addAll(quoteItem)
@@ -92,17 +93,18 @@ class EmployeesListFragment : Fragment(), IVIewEmployerList, KodeinAware {
 
         mAdapter.setOnItemClickListener(object : OnItemClickListener {
             override fun onItemClick(item: Item<*>, view: View) {
-                val employeeItem = item as EmployeeItem
-                 viewModel.onItemClick(employeeItem.employee)
+                val employeeItem = item as MoviceItem
+                val movice = employeeItem.employee
+                viewModel.onItemClick(movice)
 
             }
         })
     }
 
 
-    private fun List<Employee>.toQuoteItem(): List<EmployeeItem> {
+    private fun List<MovieResultsItem>.toQuoteItem(): List<MoviceItem> {
         return this.map {
-            EmployeeItem(it)
+            MoviceItem(it, context!!)
         }
     }
 

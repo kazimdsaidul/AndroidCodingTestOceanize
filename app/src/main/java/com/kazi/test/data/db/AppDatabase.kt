@@ -5,14 +5,15 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.kazi.test.data.db.entities.Employee
+import com.kazi.test.data.db.entities.MovieResultsItem
 
 /**
  * Created by Kazi Md. Saidul Email: Kazimdsaidul@gmail.com  Mobile: +8801675349882 on 2019-09-03.
  */
 @Database(
-    entities = [Employee::class],
+    entities = [MovieResultsItem::class],
     version = 1,
-    exportSchema = true
+    exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
 
@@ -38,7 +39,10 @@ abstract class AppDatabase : RoomDatabase() {
             Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
+
                 "MyDatabase.db"
+            ).fallbackToDestructiveMigration(
+
             ).build()
     }
 }

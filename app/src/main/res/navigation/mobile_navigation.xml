@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_employee_list"
-        android:name="com.kazi.test.ui.employeesList.EmployeesListFragment"
+        android:name="com.kazi.test.ui.popularMovieList.MoviceListFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 

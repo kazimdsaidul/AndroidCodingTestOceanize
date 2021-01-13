@@ -8,7 +8,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.kazi.test"
-        minSdkVersion 15
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -119,6 +119,8 @@ dependencies {
     implementation 'com.github.lndmflngs:memorizing-pager:2.0.1'
 
     implementation 'org.apache.commons:commons-lang3:3.8.1'
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
 
 }

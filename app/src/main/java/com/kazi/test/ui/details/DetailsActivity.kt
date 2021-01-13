@@ -1,19 +1,19 @@
 package com.kazi.test.ui.details
 
 import android.os.Bundle
-import android.widget.RatingBar
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProviders
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.kazi.test.R
 import com.kazi.test.base.BaseActivity
-import com.kazi.test.data.db.entities.Employee
+import com.kazi.test.data.db.entities.MovieResultsItem
+import com.kazi.test.data.network.APIService
 import com.kazi.test.databinding.ActivityDetailsBinding
-import com.kazi.test.ui.employeesList.EmployeesListViewModel
-import com.kazi.test.ui.employeesList.employeesViewModelFactory.EmployeesViewModelFactory
-import com.kazi.test.ui.employeesList.view.IVIewEmployerList
+import com.kazi.test.ui.popularMovieList.MovieListViewModel
+import com.kazi.test.ui.popularMovieList.MovieViewModelFactory.EmployeesViewModelFactory
+import com.kazi.test.ui.popularMovieList.view.IVIewEmployerList
 import kotlinx.android.synthetic.main.activity_details.*
 import kotlinx.android.synthetic.main.content_details.*
 import org.kodein.di.KodeinAware
@@ -23,13 +23,11 @@ import org.kodein.di.generic.instance
 
 class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
 
-
-
-    override fun openEmpDetailsActivity(employee: Employee) {
+    override fun openEmpDetailsActivity(employee: MovieResultsItem) {
 
     }
 
-    private lateinit var viewModel: EmployeesListViewModel
+    private lateinit var viewModel: MovieListViewModel
     override val kodein by kodein()
 
     private val factory: EmployeesViewModelFactory by instance()
@@ -40,47 +38,41 @@ class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
 
         val binding: ActivityDetailsBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_details)
-        viewModel = ViewModelProviders.of(this, factory).get(EmployeesListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, factory).get(MovieListViewModel::class.java)
         viewModel.view = this
         binding.viewmodel = viewModel
 
+        val m = intent.getParcelableExtra("data") as MovieResultsItem
+        viewModel.mEmployee.value = m
 
-        val employee = intent.getParcelableExtra("data") as Employee
-        viewModel.mEmployee.value = employee
-
-        setEmpImageFormServer(employee)
-        setToolbar(getString(R.string.employee_details))
-
-
-        ratingBar.rating = employee.rating.toFloat()
-        ratingBar.onRatingBarChangeListener =
-            RatingBar.OnRatingBarChangeListener { ratingBar, rating, fromUser ->
-                Toast.makeText(this@DetailsActivity, "Rating :-  $rating", Toast.LENGTH_SHORT).show()
-                viewModel.updateRating(rating.toInt())
-                if (rating < 1.0f){
-                    ratingBar.rating = 1.0f
-
-                }
-
-            }
-
+        setEmpImageFormServer(m)
+        setToolbar(getString(R.string.movie_details))
     }
 
-    private fun setEmpImageFormServer(employee: Employee) {
+    private fun setEmpImageFormServer(employee: MovieResultsItem) {
         val options = RequestOptions()
             .placeholder(R.drawable.free_avatars_cons)
             .error(R.drawable.free_avatars_cons)
 
-        val url = employee.profileImage
-        Glide.with(applicationContext).load(url)
+        val url = employee.posterPath
+        val fullURL = "https://image.tmdb.org/t/p/original" + url + "?api_key=" + APIService.API_KEY
+
+        val circularProgressDrawable = CircularProgressDrawable(applicationContext)
+        circularProgressDrawable.strokeWidth = 5f
+        circularProgressDrawable.centerRadius = 30f
+        circularProgressDrawable.start()
+
+        Glide.with(applicationContext).load(fullURL)
             .apply(options)
+            .placeholder(circularProgressDrawable)
             .into(ivEmpImage);
+
+
 
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar()?.setDisplayShowHomeEnabled(true);
         setSupportActionBar(toolbar)
     }
-
 
 
     override fun noInternetConnectionFound() {
@@ -98,7 +90,6 @@ class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
     override fun onFailure(message: String?) {
 
     }
-
 
 
 }
