@@ -12,8 +12,7 @@
     <string name="emp_id">Employee ID: %s</string>
     <string name="title_activity_details">DetailsActivity</string>
     <string name="movie_details">Movie Details</string>
-    <string name="employees_list">Employees List</string>
-    <string name="create_employees">Create Employees</string>
+    <string name="employees_list">Movie List</string>
     <string name="title">Title %s</string>
     <string name="releaseDate">Release Date: %s</string>
     <string name="status">Status: %s</string>
