@@ -121,6 +121,6 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.8.1'
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-
+    implementation 'com.itkacher.okhttpprofiler:okhttpprofiler:1.0.5'
 
 }

@@ -5,7 +5,6 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
         <variable
             name="viewmodel"
             type="com.kazi.test.ui.popularMovieList.MovieListViewModel" />
@@ -30,13 +29,9 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </com.google.android.material.appbar.AppBarLayout>
-
         <include
-
             layout="@layout/content_details"
             bind:viewmodel="@{viewmodel}" />
-
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

@@ -1,7 +1,9 @@
 package com.kazi.test.ui.details
 
 import android.os.Bundle
+import android.view.View
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
@@ -9,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.kazi.test.R
 import com.kazi.test.base.BaseActivity
 import com.kazi.test.data.db.entities.MovieResultsItem
+import com.kazi.test.data.db.entities.ResponseMovieDetails
 import com.kazi.test.data.network.APIService
 import com.kazi.test.databinding.ActivityDetailsBinding
 import com.kazi.test.ui.popularMovieList.MovieListViewModel
@@ -35,26 +38,30 @@ class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setToolbar(getString(R.string.movie_details))
 
         val binding: ActivityDetailsBinding =
             DataBindingUtil.setContentView(this, R.layout.activity_details)
         viewModel = ViewModelProviders.of(this, factory).get(MovieListViewModel::class.java)
         viewModel.view = this
         binding.viewmodel = viewModel
+        binding.setLifecycleOwner(this);
 
         val m = intent.getParcelableExtra("data") as MovieResultsItem
-        viewModel.mEmployee.value = m
+        viewModel.getMovieDetails(m)
+        viewModel.movieDetails.observe(this, Observer {
+            setMovieDetailsFromServer(it)
+        })
 
-        setEmpImageFormServer(m)
-        setToolbar(getString(R.string.movie_details))
+
     }
 
-    private fun setEmpImageFormServer(employee: MovieResultsItem) {
+    private fun setMovieDetailsFromServer(model: ResponseMovieDetails) {
         val options = RequestOptions()
             .placeholder(R.drawable.free_avatars_cons)
             .error(R.drawable.free_avatars_cons)
 
-        val url = employee.posterPath
+        val url = model.posterPath
         val fullURL = "https://image.tmdb.org/t/p/original" + url + "?api_key=" + APIService.API_KEY
 
         val circularProgressDrawable = CircularProgressDrawable(applicationContext)
@@ -67,8 +74,6 @@ class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
             .placeholder(circularProgressDrawable)
             .into(ivEmpImage);
 
-
-
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar()?.setDisplayShowHomeEnabled(true);
         setSupportActionBar(toolbar)
@@ -80,10 +85,11 @@ class DetailsActivity : BaseActivity(), KodeinAware, IVIewEmployerList {
     }
 
     override fun showProgress() {
-
+        progress_bar.visibility = View.VISIBLE
     }
 
     override fun hiddenProgress() {
+        progress_bar.visibility = View.GONE
 
     }
 

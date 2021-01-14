@@ -32,7 +32,7 @@
                 tools:srcCompat="@tools:sample/avatars[4]" />
 
             <TextView
-                android:id="@+id/tvEmpName"
+                android:id="@+id/tvMovieTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -45,34 +45,34 @@
                 tools:text="KAZI MD. SAIDUL" />
 
             <TextView
-                android:id="@+id/tvEmpSalary"
+                android:id="@+id/tvReleaseDate"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/tvEmpID"
+                app:layout_constraintEnd_toEndOf="@+id/tvPopularity"
                 app:layout_constraintHorizontal_bias="0.3"
-                app:layout_constraintStart_toStartOf="@+id/tvEmpID"
-                app:layout_constraintTop_toBottomOf="@+id/tvEmpID"
+                app:layout_constraintStart_toStartOf="@+id/tvPopularity"
+                app:layout_constraintTop_toBottomOf="@+id/tvPopularity"
                 tools:text="Salary: 1000" />
 
             <TextView
-                android:id="@+id/tvEmpAge"
+                android:id="@+id/tvStatus"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/tvEmpSalary"
-                app:layout_constraintStart_toStartOf="@+id/tvEmpSalary"
-                app:layout_constraintTop_toBottomOf="@+id/tvEmpSalary"
+                app:layout_constraintEnd_toEndOf="@+id/tvReleaseDate"
+                app:layout_constraintStart_toStartOf="@+id/tvReleaseDate"
+                app:layout_constraintTop_toBottomOf="@+id/tvReleaseDate"
                 tools:text="Age: 245" />
 
             <TextView
-                android:id="@+id/tvEmpID"
+                android:id="@+id/tvPopularity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                app:layout_constraintEnd_toEndOf="@+id/tvEmpName"
-                app:layout_constraintStart_toStartOf="@+id/tvEmpName"
-                app:layout_constraintTop_toBottomOf="@+id/tvEmpName"
+                app:layout_constraintEnd_toEndOf="@+id/tvMovieTitle"
+                app:layout_constraintStart_toStartOf="@+id/tvMovieTitle"
+                app:layout_constraintTop_toBottomOf="@+id/tvMovieTitle"
                 tools:text="Employee ID: 148518" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

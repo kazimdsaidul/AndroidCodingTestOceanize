@@ -2,9 +2,9 @@ package com.kazi.test.data.repository
 
 
 import com.kazi.test.data.db.AppDatabase
-import com.kazi.test.data.db.entities.Employee
 import com.kazi.test.data.db.entities.MovieResultsItem
 import com.kazi.test.data.db.entities.PopularMovieListResponse
+import com.kazi.test.data.db.entities.ResponseMovieDetails
 import com.kazi.test.data.network.APIService
 import com.kazi.test.data.network.SafeApiRequest
 
@@ -24,6 +24,12 @@ class UserRepository(
         return apiRequest { apiService.getEmployees(APIService.API_KEY) }
     }
 
+    suspend fun getMovieDetailsAPI(movieId: Int?): ResponseMovieDetails {
+
+        return apiRequest { apiService.getMovieDetailsAPI(movieId, APIService.API_KEY) }
+    }
+
+
     suspend fun saveAllEmployee(user: List<MovieResultsItem>) = db.getUserDao().insert(user)
 
 
@@ -31,7 +37,7 @@ class UserRepository(
         return db.getUserDao().getAllEmployee()
     }
 
-    suspend fun update(employee : MovieResultsItem) : Int{
+    suspend fun update(employee: MovieResultsItem): Int {
         return db.getUserDao().update(employee)
     }
 }

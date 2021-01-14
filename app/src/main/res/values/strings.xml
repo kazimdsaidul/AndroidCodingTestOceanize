@@ -14,4 +14,9 @@
     <string name="movie_details">Movie Details</string>
     <string name="employees_list">Employees List</string>
     <string name="create_employees">Create Employees</string>
+    <string name="title">Title %s</string>
+    <string name="releaseDate">Release Date: %s</string>
+    <string name="status">Status: %s</string>
+    <string name="popularity">Popularity: %s</string>
+
 </resources>
