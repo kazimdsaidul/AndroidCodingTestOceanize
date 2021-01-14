@@ -27,6 +27,7 @@ public interface APIService {
             networkConnectionInterceptor: NetworkConnectionInterceptor
         ): APIService {
 
+
             val okkHttpclient = OkHttpClient.Builder()
                 .addInterceptor(networkConnectionInterceptor)
 
@@ -49,7 +50,10 @@ public interface APIService {
 
 
     @GET("3/movie/popular")
-    suspend fun getEmployees(@Query("api_key") apiKey: String): Response<PopularMovieListResponse>
+    suspend fun getEmployees(
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
+    ): Response<PopularMovieListResponse>
 
 
     @GET("3/movie/{movieId}")

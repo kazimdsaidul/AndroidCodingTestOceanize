@@ -40,7 +40,7 @@ class AddEmployeeFragment : Fragment(), IVIewEmployerList, KodeinAware {
 
         viewModel = ViewModelProviders.of(this, factory).get(MovieListViewModel::class.java)
         viewModel.view = this
-        viewModel.getEmployeesList()
+        viewModel.getMovieList(1)
         val root = inflater.inflate(R.layout.fragment_employees_add, container, false)
 
 

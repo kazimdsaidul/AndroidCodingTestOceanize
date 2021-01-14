@@ -19,9 +19,9 @@ class UserRepository(
 
 ) : SafeApiRequest() {
 
-    suspend fun getEmployeesAPI(): PopularMovieListResponse {
+    suspend fun getPopularMovieAPI(page: Int): PopularMovieListResponse {
 
-        return apiRequest { apiService.getEmployees(APIService.API_KEY) }
+        return apiRequest { apiService.getEmployees(APIService.API_KEY, page) }
     }
 
     suspend fun getMovieDetailsAPI(movieId: Int?): ResponseMovieDetails {
@@ -30,10 +30,10 @@ class UserRepository(
     }
 
 
-    suspend fun saveAllEmployee(user: List<MovieResultsItem>) = db.getUserDao().insert(user)
+    suspend fun saveAllMovieList(user: List<MovieResultsItem>) = db.getUserDao().insert(user)
 
 
-    suspend fun getEmployeesLocal(): List<MovieResultsItem> {
+    suspend fun getMoviceFromLocalDB(): List<MovieResultsItem> {
         return db.getUserDao().getAllEmployee()
     }
 

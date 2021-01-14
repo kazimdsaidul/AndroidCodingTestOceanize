@@ -16,7 +16,7 @@ import com.kazi.test.utils.exception.NoInternetException
 class MovieListViewModel(val repository: UserRepository) : ViewModel() {
 
 
-    private lateinit var employees: PopularMovieListResponse
+    var popularMovieListResponse: PopularMovieListResponse? = null
     var listOfEmployees: MutableLiveData<List<MovieResultsItem>> = MutableLiveData()
     var movieDetails: MutableLiveData<ResponseMovieDetails> = MutableLiveData()
 
@@ -28,19 +28,23 @@ class MovieListViewModel(val repository: UserRepository) : ViewModel() {
     var view: IVIewEmployerList? = null
 
 
-
-    fun getEmployeesList() {
+    fun getMovieList(page: Int) {
         view?.showProgress()
         Coroutines.main {
             try {
-                val employeesLocal = repository.getEmployeesLocal()
+                val employeesLocal = repository.getMoviceFromLocalDB()
                 if (employeesLocal.size != 0) {
                     listOfEmployees.value = employeesLocal
                 } else {
-                     employees = repository.getEmployeesAPI()
+
+                    var page1 = popularMovieListResponse?.page ?: 0
+                    page1 = page1.plus(1)
+
+                    popularMovieListResponse = page1?.let { repository.getPopularMovieAPI(it) }
                     Log.e("", "")
-                    repository.saveAllEmployee(employees.results as List<MovieResultsItem>)
-                    listOfEmployees.value = employees.results as List<MovieResultsItem>?
+                    repository.saveAllMovieList(popularMovieListResponse?.results as List<MovieResultsItem>)
+                    listOfEmployees.value =
+                        popularMovieListResponse?.results as List<MovieResultsItem>?
                     view?.hiddenProgress()
                 }
 
@@ -79,6 +83,10 @@ class MovieListViewModel(val repository: UserRepository) : ViewModel() {
             }
 
         }
+
+    }
+
+    fun loadNextDataFromApi(page: Int) {
 
     }
 

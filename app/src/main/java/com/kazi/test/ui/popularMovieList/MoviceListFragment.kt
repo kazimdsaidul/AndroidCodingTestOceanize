@@ -9,13 +9,15 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cloudwell.paywell.consumer.utils.viewUtil.hide
 import com.cloudwell.paywell.consumer.utils.viewUtil.show
 import com.kazi.test.R
 import com.kazi.test.data.db.entities.MovieResultsItem
 import com.kazi.test.ui.details.DetailsActivity
-import com.kazi.test.ui.popularMovieList.adapter.MoviceItem
 import com.kazi.test.ui.popularMovieList.MovieViewModelFactory.EmployeesViewModelFactory
+import com.kazi.test.ui.popularMovieList.adapter.EndlessRecyclerViewScrollListener
+import com.kazi.test.ui.popularMovieList.adapter.MoviceItem
 import com.kazi.test.ui.popularMovieList.view.IVIewEmployerList
 import com.kazi.test.utils.Coroutines
 import com.xwray.groupie.GroupAdapter
@@ -53,6 +55,7 @@ class MoviceListFragment : Fragment(), IVIewEmployerList, KodeinAware {
         val root = inflater.inflate(R.layout.fragment_employees_list, container, false)
 
 
+        viewModel.getMovieList(1);
         return root
     }
 
@@ -64,7 +67,6 @@ class MoviceListFragment : Fragment(), IVIewEmployerList, KodeinAware {
     override fun onResume() {
         super.onResume()
         viewModel.view = this
-        viewModel.getEmployeesList()
         bindUI()
     }
 
@@ -79,12 +81,14 @@ class MoviceListFragment : Fragment(), IVIewEmployerList, KodeinAware {
 
     private fun initRecyclerView(quoteItem: List<MoviceItem>) {
 
+        val linearLayoutManager = LinearLayoutManager(context)
+
         val mAdapter = GroupAdapter<ViewHolder>().apply {
             addAll(quoteItem)
         }
 
         recyclerview.apply {
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = linearLayoutManager
             setHasFixedSize(true)
             adapter = mAdapter
         }
@@ -99,6 +103,17 @@ class MoviceListFragment : Fragment(), IVIewEmployerList, KodeinAware {
 
             }
         })
+
+        var scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                // Triggered only when new data needs to be appended to the list
+                // Add whatever code is needed to append new items to the bottom of the list
+
+                viewModel.getMovieList(page + 1)
+            }
+        }
+
+        recyclerview.addOnScrollListener(scrollListener)
     }
 
 

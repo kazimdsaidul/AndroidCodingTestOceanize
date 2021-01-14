@@ -9,9 +9,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class PopularMovieListResponse(
-
 	@field:SerializedName("page")
-	val page: Int? = null,
+	val page: Int = 0,
 
 	@field:SerializedName("total_pages")
 	val totalPages: Int? = null,
